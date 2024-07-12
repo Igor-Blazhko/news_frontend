@@ -24,6 +24,7 @@ export default function AllPost(){
         }
     }]);
     const filter = useSelector( (state:States) => state.tagfilter)
+    const userfilter = useSelector( (state:States) => state.userfilter)
     useEffect(()=>{
         const posts:Posts[] = [
             {
@@ -84,10 +85,11 @@ export default function AllPost(){
     return(
         <main className={styles.main}>
             { 
-                posts.filter( (item) => item.tags
-                                                .find( (tag) => tag.nametag.includes (filter) 
-                                            )
-                            ).map( (post:Posts) => 
+                posts
+                    .filter( (item) => item.tags
+                                                .find( (tag) => tag.nametag.includes (filter) ))
+                    .filter( (item) => userfilter? item.author.id === userfilter : true)
+                    .map( (post:Posts) => 
                     <OnePost id = {post.id} title={post.article} text = {post.text} key={post.id}></OnePost>
                 )
             }

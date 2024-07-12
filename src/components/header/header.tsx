@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Page } from '../../types';
 import Button from '../simplyComponents/button/button';
 import styles from './header.module.css'
-import { ReactEventHandler, useEffect, useState } from 'react';
+import { ChangeEventHandler, ReactEventHandler, useEffect, useState } from 'react';
 import { User } from '../pageOnePost/types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { States } from '../../store';
@@ -16,9 +16,12 @@ export default function Header() {
         sername: 'Blazhko',
         login: 'user1',
     }])
+    const [change, setChange] = useState(false)
 
     const filter = useSelector( (state:States) => state.tagfilter)
+    const userfilter = useSelector( (state:States) => state.userfilter)
     const dispatch = useDispatch()
+
     useEffect(() => {
         const users = [
             {
@@ -49,6 +52,15 @@ export default function Header() {
             buffer: event.target.value,
         })
     }
+    
+    function changeUser(event) {
+        dispatch({
+            type:'setUserFilter',
+            userId: +event.target.value,
+        })
+        if ( +event.target.value ) setChange(true)
+        else setChange(false)
+    }
 
     return (
         <header className={styles.header}>
@@ -62,8 +74,10 @@ export default function Header() {
             </nav>
             <div className={styles.filter}>
                 <input type="text" placeholder="Поиск по тегам" onChange={changeFilter}/>
-                <select>
-                    <option value="" disabled>Выберите пользователя</option>
+                <select onChange={changeUser} defaultValue="option0">
+                    <option value="0">
+                        { change? 'Cбросить фильтрацию': 'Выберите пользователя'}
+                    </option>
                     { 
                         users.map((user:User)=> <option key = {user.id} value={user.id}>{user.name} {user.sername}</option>)
                     }

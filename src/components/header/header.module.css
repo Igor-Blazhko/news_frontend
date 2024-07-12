@@ -1,0 +1,41 @@
+header {
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #444;
+    box-sizing: border-box;
+    min-height: 50px;
+}
+  
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff;
+}
+  
+
+  
+  .filter {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter input,
+  .filterselect {
+    padding: 8px 10px;
+    margin-left: 15px;
+    border: 2px solid #444;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .filter input:focus,
+  .filter select:focus {
+    border-color: #888;
+  }
+  
+  .filter select {
+    background-color: #fff;
+}
+  

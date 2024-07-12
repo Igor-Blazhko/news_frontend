@@ -6,11 +6,13 @@ import { Page } from './types'
 import SignIn from './components/auth/register/register'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import OnePost from './components/pageOnePost/OnePost'
+import { Provider } from 'react-redux'
+import { store } from './store'
 
 function App() {
 
   return (
-    <>
+    <Provider store={store}>
       <BrowserRouter> 
       <Header></Header>
         <Routes>
@@ -21,7 +23,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <Footer></Footer>
-    </>
+    </Provider>
   )
 }
 

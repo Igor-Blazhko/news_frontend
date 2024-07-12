@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { Page } from '../../types';
 import Button from '../simplyComponents/button/button';
 import styles from './header.module.css'
-import { useEffect, useState } from 'react';
+import { ReactEventHandler, useEffect, useState } from 'react';
 import { User } from '../pageOnePost/types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { States } from '../../store';
+
 
 export default function Header() {
     const [users, setUsers] = useState([ {
@@ -14,6 +17,8 @@ export default function Header() {
         login: 'user1',
     }])
 
+    const filter = useSelector( (state:States) => state.tagfilter)
+    const dispatch = useDispatch()
     useEffect(() => {
         const users = [
             {
@@ -35,8 +40,15 @@ export default function Header() {
                 login: 'user3',
             },
         ];
-        setUsers(users)
+        setUsers(users);
     },[])
+
+    function changeFilter(event:React.ChangeEvent<HTMLInputElement>){
+        dispatch({
+            type:'Filter',
+            buffer: event.target.value,
+        })
+    }
 
     return (
         <header className={styles.header}>
@@ -49,7 +61,7 @@ export default function Header() {
                 </Link>
             </nav>
             <div className={styles.filter}>
-                <input type="text" placeholder="Поиск по тегам"/>
+                <input type="text" placeholder="Поиск по тегам" onChange={changeFilter}/>
                 <select>
                     <option value="" disabled>Выберите пользователя</option>
                     { 

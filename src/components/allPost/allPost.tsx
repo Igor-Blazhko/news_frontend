@@ -2,6 +2,8 @@ import OnePost from "./onePost/onePost";
 import styles from './allPost.module.css'
 import { useEffect, useState } from "react";
 import { Posts } from "../pageOnePost/types/types";
+import { useSelector } from "react-redux";
+import { States } from "../../store";
 
 
 export default function AllPost(){
@@ -21,7 +23,7 @@ export default function AllPost(){
             login: '0',
         }
     }]);
-    
+    const filter = useSelector( (state:States) => state.tagfilter)
     useEffect(()=>{
         const posts:Posts[] = [
             {
@@ -82,7 +84,10 @@ export default function AllPost(){
     return(
         <main className={styles.main}>
             { 
-                posts.map( (post:Posts) => 
+                posts.filter( (item) => item.tags
+                                                .find( (tag) => tag.nametag.includes (filter) 
+                                            )
+                            ).map( (post:Posts) => 
                     <OnePost id = {post.id} title={post.article} text = {post.text} key={post.id}></OnePost>
                 )
             }

@@ -90,7 +90,7 @@ export default function AllPost(){
                                                 .find( (tag) => tag.nametag.includes (filter) ))
                     .filter( (item) => userfilter? item.author.id === userfilter : true)
                     .map( (post:Posts) => 
-                    <OnePost id = {post.id} title={post.article} text = {post.text} key={post.id}></OnePost>
+                    <OnePost id = {post.id} title={post.article} text = {post.text} key={post.id} tags={post.tags} author = {post.author}></OnePost>
                 )
             }
         </main>

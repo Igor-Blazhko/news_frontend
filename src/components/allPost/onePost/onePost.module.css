@@ -14,22 +14,20 @@
 
 .post_content {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    align-items: baseline ;
+    justify-content: flex-start;
+    flex-basis: 50%;
+    column-gap: 50px;
   }
     
-  .post_icon {
-    width: 50px;
-    height: 50px;
-    margin-right: 20px;
-    animation: rotate 4s linear infinite;
-  }
     
-  @keyframes rotate {
+  @keyframes fadeInLeft {
     0% {
-      transform: rotate(0deg);
+      transform: translateX(-100%);
     }
     100% {
-      transform: rotate(360deg);
+      transform:translateX(0%);
     }
   }
   .post_title {
@@ -39,6 +37,8 @@
   
   .post_text {
     font-size: 1em;
+    width: 80%;
+    min-height: 50px;
   }
   .read_more_button {
     padding: 10px 20px;
@@ -54,4 +54,21 @@
   .read_more_button:hover {
     background-color: #444;
     transform: translateY(-3px);
-  }
+}
+
+.tag{
+  flex-basis: 10%;
+}
+.tag_tag{
+  display: flex;
+  column-gap: 5px;
+  align-items: baseline;
+}
+.tag_title{
+  font-size: 1.5em;
+}
+
+.tag_name{
+  margin-top: 10px;
+  font-size: 1em;
+}

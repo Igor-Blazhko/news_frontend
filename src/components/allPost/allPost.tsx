@@ -86,8 +86,9 @@ export default function AllPost(){
         <main className={styles.main}>
             { 
                 posts
-                    .filter( (item) => item.tags
-                                                .find( (tag) => tag.nametag.includes (filter) ))
+                    .filter( (item) => filter[0]? item.tags
+                                                            .some( (tag) => new Set(filter).has(tag.nametag)): true) 
+                                                        
                     .filter( (item) => userfilter? item.author.id === userfilter : true)
                     .map( (post:Posts) => 
                     <OnePost id = {post.id} title={post.article} text = {post.text} key={post.id} tags={post.tags} author = {post.author}></OnePost>

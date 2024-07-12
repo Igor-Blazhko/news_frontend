@@ -1,12 +1,12 @@
-import { configureStore, createStore } from '@reduxjs/toolkit'
+import { createStore } from '@reduxjs/toolkit'
 
 export interface States{
-  tagfilter: string,
+  tagfilter: string[],
   userfilter: number
 }
 
-const defaultState = {
-  tagfilter: '',
+const defaultState:States = {
+  tagfilter: [],
   userfilter: 0,
 }
 
@@ -19,8 +19,9 @@ const reducer = (state = defaultState, action:Action) => {
   switch (action.type){
     case 'Filter':
       if (( 'buffer' in action) && (action.buffer !== undefined)) {
+        const arr = action.buffer.split(' ');
         state = {...state,
-          tagfilter: action.buffer,
+          tagfilter: arr,
         }
       }
       return state;

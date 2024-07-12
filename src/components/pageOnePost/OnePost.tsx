@@ -1,19 +1,59 @@
+import { Link, useLocation } from "react-router-dom";
 import Button from "../simplyComponents/button/button";
 import styles from './OnePost.module.css'
+import { lazy, useEffect, useState } from "react";
+import Comment from "./comments/comments";
+import { Posts } from "./types/types";
 
-interface props {
-    id:number,
-}
-export default function Post({ id }:props){
-    
+
+
+export default function Post(){
+    const location = useLocation()
+    const [id , setId] = useState(0)
+    const [showingComment , setshowingComment] = useState(false)
+    const [post, setPost] = useState( { } )
+
+    useEffect(() => {
+        const id = getId(location.pathname )
+        setId( id )
+        const post:Posts = getPost( id )
+        setPost( post )
+    },[location])
+
+    function getId(path: string ): number {
+        const id = +path.slice(path.lastIndexOf('/')+1 )
+        return id
+    }
+
+    function getPost(id: number): Posts{
+        return {
+            id: 1,
+            article: 'string',
+            text: 'string',
+            tags: [
+                { nametag:'tag1', },
+                { nametag:'tag2', }
+            ],
+            author: {
+                id:1,
+                login: 'user',
+                name: 'user',
+                sername: 'user',
+            },
+        }
+    }
+
+    function showComment () {
+        setshowingComment(( value ) => !value )
+    }
     return (
-        <main>
-            <a href="/">
+        <main className={styles.main}>
+            <Link to="/">
                 <Button>Назад</Button>
-            </a>
-            <a href="#comments">
-                <Button>Показать комментарий</Button>
-            </a>
+            </Link>
+
+            <Button onClick = {showComment}>Показать комментарий</Button>
+
 
             <div className={styles.post_content_full}>
             <img src="https://via.placeholder.com/150" alt="Post Image" className={styles.post_image}/>
@@ -23,19 +63,9 @@ export default function Post({ id }:props){
             </p>
             </div>
 
-            <section className={styles.comments} id="comments">
-            <h3>Комментарии</h3>
-            <div className={styles.comment}>
-                <p>Комментарий 1</p>
-            </div>
-            <div className={styles.comment}>
-                <p>Комментарий 2</p>
-            </div>
-            <form action="" className={styles.comment_form}>
-                <textarea name="comment" id="comment" placeholder="Оставьте ваш комментарий" required></textarea>
-                <button type="submit">Отправить</button>
-            </form>
-            </section>
+            {showingComment && <Comment id = {id}/>}
+            
+
         </main>
     )
 }

@@ -1,3 +1,6 @@
+
 main {
-    min-height: calc(100vh - 13vh);
-}
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+  }

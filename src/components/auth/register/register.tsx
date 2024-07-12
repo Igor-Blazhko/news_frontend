@@ -1,13 +1,14 @@
 
+import { Link } from "react-router-dom";
 import Button from "../../simplyComponents/button/button";
-import styles from './login.module.css'
+import styles from '../logIn/login.module.css'
 
 export default function SignIn(){
     return (
         <main>
-            <a href="/">
+            <Link to="/">
                 <Button>Назад</Button>
-            </a>
+            </Link>
         <form className={styles.auth_form}>
             <h2>Регистрация</h2>
             <input type="text" placeholder="Логин" required/>

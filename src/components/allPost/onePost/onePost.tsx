@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom'
 import { Page } from '../../../types'
 import styles from './onePost.module.css'
+import Button from '../../simplyComponents/button/button'
 
 type PropsOnePost = {
-    id:string,
+    id:number,
     title:string,
     text:string,
 }
@@ -20,7 +22,9 @@ export default function OnePost(props:PropsOnePost){
                         </p>
                     </div>
                 </div>
-                <a href={Page.OnePost + '/' + props.id} className={styles.read_more_button}>Читать далее</a>
+                <Link to = {Page.OnePost + '/' + props.id}>
+                    <Button>Читать далее</Button>
+                </Link>
             </div>
     )
 }

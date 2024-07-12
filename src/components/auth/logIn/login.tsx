@@ -1,12 +1,13 @@
 import styles from './login.module.css'
 import Button from '../../simplyComponents/button/button'
+import { Link } from 'react-router-dom'
 
 export default function LogIn(){
     return (
         <main>
-            <a href="/">
-                <Button>Назад</Button>
-            </a>
+                <Link to="/">
+                    <Button>Назад</Button>
+                </Link>
         
             <form className={styles.auth_form}>
                 <h2>Авторизация</h2>

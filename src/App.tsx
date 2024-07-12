@@ -1,4 +1,3 @@
-import './App.css'
 import Header from './components/header/header'
 import AllPost from './components/allPost/allPost'
 import Footer from './components/footer/footer'
@@ -12,13 +11,13 @@ function App() {
 
   return (
     <>
+      <BrowserRouter> 
       <Header></Header>
-      <BrowserRouter>
         <Routes>
           <Route path="*" element ={ <AllPost/> }/>
           <Route path={Page.LogIn} element ={ <LogIn/> }/>
           <Route path={Page.SignIn} element ={ <SignIn/> }/>
-          <Route path={Page.OnePost+'/:id'} element ={ <OnePost id={1} /> }/>
+          <Route path={Page.OnePost+'/:id'} element ={ <OnePost/> }/>
         </Routes>
       </BrowserRouter>
       <Footer></Footer>

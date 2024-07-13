@@ -1,19 +1,23 @@
 import { createStore } from '@reduxjs/toolkit'
+import cooks from './basefunction';
 
 export interface States{
   tagfilter: string[],
-  userfilter: number
+  userfilter: number,
+  JWT:string,
 }
 
 const defaultState:States = {
   tagfilter: [],
   userfilter: 0,
+  JWT:'123',
 }
 
 type Action = {
   type:string,
   buffer?:string,
   userId?:number,
+  JWT?:string,
 }
 const reducer = (state = defaultState, action:Action) => {
   switch (action.type){
@@ -30,6 +34,15 @@ const reducer = (state = defaultState, action:Action) => {
         state = {...state,
           userfilter: action.userId,
         }
+      }
+      return state
+    case 'SetJWT':
+      if ( ('JWT' in action) && (action.JWT !== undefined) ){
+        state = {...state,
+          JWT: action.JWT,
+        }
+        cooks.LogIn(action.JWT)
+      // document.cookie = `JWT_token=${action.JWT}`
       }
       return state
     default:

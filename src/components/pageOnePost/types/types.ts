@@ -14,6 +14,7 @@ export interface User{
     login:string,
     name:string,
     sername:string,
+    password?:string,
 }
 
 export interface Comment {

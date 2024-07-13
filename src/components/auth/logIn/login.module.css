@@ -28,6 +28,10 @@
     border-color: #888;
   }
   
+.red{
+  border: 2px solid red;
+  background-color: rgba(245, 0, 0, 0.555);
+}
 
   
   

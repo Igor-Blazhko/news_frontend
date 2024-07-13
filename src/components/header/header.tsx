@@ -7,6 +7,7 @@ import { ChangeEventHandler, ReactEventHandler, useEffect, useState } from 'reac
 import { User } from '../pageOnePost/types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { States } from '../../store';
+import cooks from '../../basefunction';
 
 
 export default function Header() {
@@ -17,9 +18,11 @@ export default function Header() {
         login: 'user1',
     }])
     const [change, setChange] = useState(false)
+    const [log, setLog] = useState(cooks.getCookie('JWT_token'))
 
     const filter = useSelector( (state:States) => state.tagfilter)
     const userfilter = useSelector( (state:States) => state.userfilter)
+    const JWT = useSelector( (state:States) => state.JWT)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -62,6 +65,14 @@ export default function Header() {
         else setChange(false)
     }
 
+    function LogOut(){
+        cooks.LogOut()
+        setLog(()=>cooks.getCookie('JWT_token'))
+    }
+
+    function refreshStateLog(){
+        setLog(()=>cooks.getCookie('JWT_token'))
+    }
     return (
         <header className={styles.header}>
             <div className={styles.logo}>
@@ -83,14 +94,22 @@ export default function Header() {
                     }
                 </select>
                 </div>
-            <div className="auth">
-                <Link to={Page.LogIn}>
-                    <Button>LogIn</Button>
-                </Link>
-                <Link to={Page.SignIn}>
-                    <Button>SignIn</Button>
-                </Link>
-            </div>
+                
+                { 
+                log?  
+                <div className="auth">
+                    <Button onClick={LogOut}>LogOut</Button>
+                </div>:
+                <div className="auth">
+                    <Link to={Page.LogIn}>
+                        <Button onClick={refreshStateLog}>LogIn</Button>
+                    </Link>
+                    <Link to={Page.SignIn}>
+                        <Button onClick={refreshStateLog}>SignIn</Button>
+                    </Link>
+                </div>
+                }
+            
         </header>
     )
 } 

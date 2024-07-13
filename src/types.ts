@@ -4,3 +4,23 @@ export const enum Page {
     AllPost = 'AllPost',
     OnePost = 'OnePost',
 }
+
+export class ObjectToken {
+    private readonly access_token:string;
+    constructor(access_token:string){
+        this.access_token = access_token;
+    }
+}
+
+export class HTTPExeption{
+    private readonly response:string;
+    private readonly status:number;
+    private readonly message:string;
+    private readonly name:string;
+    constructor(response:string, status:number, message:string, name:string){
+        this.response = response;
+        this.status = status;
+        this.message = message;
+        this.name = name;
+    }
+}

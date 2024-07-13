@@ -19,6 +19,7 @@ export default function Header() {
     }])
     const [change, setChange] = useState(false)
     const [log, setLog] = useState(cooks.getCookie('JWT_token'))
+    
 
     const filter = useSelector( (state:States) => state.tagfilter)
     const userfilter = useSelector( (state:States) => state.userfilter)
@@ -47,6 +48,7 @@ export default function Header() {
             },
         ];
         setUsers(users);
+        setLog(JWT)
     },[])
 
     function changeFilter(event:React.ChangeEvent<HTMLInputElement>){
@@ -67,7 +69,9 @@ export default function Header() {
 
     function LogOut(){
         cooks.LogOut()
-        setLog(()=>cooks.getCookie('JWT_token'))
+        dispatch({
+            type: 'DelJwt',
+        })
     }
 
     function refreshStateLog(){
@@ -96,10 +100,11 @@ export default function Header() {
                 </div>
                 
                 { 
-                log?  
+                JWT?  
                 <div className="auth">
                     <Button onClick={LogOut}>LogOut</Button>
-                </div>:
+                </div> 
+                :
                 <div className="auth">
                     <Link to={Page.LogIn}>
                         <Button onClick={refreshStateLog}>LogIn</Button>

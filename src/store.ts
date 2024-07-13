@@ -4,13 +4,13 @@ import cooks from './basefunction';
 export interface States{
   tagfilter: string[],
   userfilter: number,
-  JWT:string,
+  JWT:string|undefined,
 }
 
 const defaultState:States = {
   tagfilter: [],
   userfilter: 0,
-  JWT:'123',
+  JWT: cooks.getJWT(),
 }
 
 type Action = {
@@ -44,7 +44,13 @@ const reducer = (state = defaultState, action:Action) => {
         cooks.LogIn(action.JWT)
       // document.cookie = `JWT_token=${action.JWT}`
       }
-      return state
+      return state;
+    case 'DelJwt':
+      state = {
+        ...state,
+        JWT:'',
+      }
+      return state;
     default:
       return state;
   }

@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+
 class Cookie {
     getCookie(name:string) {
         let matches = document.cookie.match(new RegExp(
@@ -37,6 +39,10 @@ class Cookie {
         })
     }
     
+    getJWT(){
+        return this.getCookie('JWT_token')
+    }
+
     LogIn(token:string){
         this.setCookie('JWT_token', token, {
             'max-age': 3600

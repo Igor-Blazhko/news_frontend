@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import Button from "../../simplyComponents/button/button";
 import styles from '../logIn/login.module.css'
 import { useRef, useState } from "react";
@@ -7,9 +7,10 @@ import SERVER from "../../../dataServer";
 import { User } from "../../pageOnePost/types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { States } from "../../../store";
-import { HTTPExeption, ObjectToken } from "../../../types";
+import { HTTPExeption, ObjectToken, Page } from "../../../types";
 
 export default function SignIn(){
+    const navigate = useNavigate();
     const [user, setUser] = useState({
         login: '',
         password: '',
@@ -78,7 +79,9 @@ export default function SignIn(){
             dispatch({
                 type: 'SetJWT',
                 JWT: token['access_token'],
-            })}
+            });
+            navigate(Page.AllPost)
+        }
         else if ( 'status' in token) 
             setError(token)
     }

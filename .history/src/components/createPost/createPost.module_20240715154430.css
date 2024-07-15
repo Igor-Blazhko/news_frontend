@@ -1,0 +1,6 @@
+.form {
+    background-color: aqua;
+    width: 60%;
+    height: calc(100vh - 200px);
+
+}

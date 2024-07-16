@@ -6,6 +6,13 @@ export const enum Page {
     CreatePost = 'CreatePost',
 }
 
+export const enum Filter {
+    All = 'All',
+    Title = 'Title',
+    Tags = 'Tags',
+    User = 'User',
+}
+
 export class ObjectToken {
     private readonly access_token:string;
     constructor(access_token:string){

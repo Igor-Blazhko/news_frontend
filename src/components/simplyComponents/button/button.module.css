@@ -10,6 +10,10 @@
 }
   
 .button:hover {
-    background-color: #444;
     transform: translateY(-3px);
+    background-color: blueviolet;
+    cursor: pointer;
+}
+.button:active{
+    background-color: indigo;
 }

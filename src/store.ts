@@ -1,43 +1,42 @@
 import { createStore } from '@reduxjs/toolkit'
 import cooks from './basefunction';
+import { Filter } from './types';
 
 export interface States{
-  tagfilter: string[],
-  userfilter: number,
+  filter: string,
+  typeFilter:Filter,
   JWT:string|undefined,
   location: string,
+  selectedPage: number;
 }
 
 const defaultState:States = {
-  tagfilter: [],
-  userfilter: 0,
+  filter: '',
   JWT: cooks.getJWT(),
   location: '*',
+  selectedPage: 1,
+  typeFilter:Filter.All,
 }
 
 type Action = {
   type:string,
+  typeFilter?:Filter,
   buffer?:string,
   userId?:number,
   JWT?:string,
+  setPage?:number,
 }
 const reducer = (state = defaultState, action:Action) => {
   switch (action.type){
     case 'Filter':
-      if (( 'buffer' in action) && (action.buffer !== undefined)) {
-        const arr = action.buffer.split(' ');
+      if (( 'buffer' in action) && (action.buffer !== undefined) && ( 'typeFilter' in action ) && (action.typeFilter !== undefined)) {
+        // const arr = action.buffer.split(' ');
         state = {...state,
-          tagfilter: arr,
+          filter: action.buffer,
+          typeFilter:action.typeFilter
         }
       }
       return state;
-    case 'setUserFilter':
-      if (( 'userId' in action) && (action.userId !== undefined)) {
-        state = {...state,
-          userfilter: action.userId,
-        }
-      }
-      return state
     case 'SetJWT':
       if ( ('JWT' in action) && (action.JWT !== undefined) ){
         state = {...state,
@@ -66,6 +65,13 @@ const reducer = (state = defaultState, action:Action) => {
         location: '*',
       }
       return state;
+    case 'setPage':
+      if ( ( 'setPage' in action ) && action.setPage !== undefined)
+        state = {
+          ...state,
+          selectedPage: action.setPage,
+        }
+      return state
     default:
       return state;
   }

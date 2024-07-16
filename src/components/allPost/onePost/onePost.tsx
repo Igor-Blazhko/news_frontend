@@ -2,40 +2,32 @@ import { Link } from 'react-router-dom'
 import { Page } from '../../../types'
 import styles from './onePost.module.css'
 import Button from '../../simplyComponents/button/button'
-import { Tag, User } from '../../pageOnePost/types/types'
+import { Posts} from '../../pageOnePost/types/types'
 
-type PropsOnePost = {
-    id:number,
-    title:string,
-    text:string,
-    tags:Tag[],
-    author: User,
-}
-
-export default function OnePost(props:PropsOnePost){
+export default function OnePost({tags, author, article, text, id, createdAt}:Posts){
     return (
             <div className={styles.post}>
                 <div className={styles.tag}>
                     <div className={styles.tag_tag}>
                         <div className={styles.tag_title}>Теги:</div>
                         <div className={styles.tag_name}>
-                            { props.tags.map( (item) => <span>{item.nametag} </span> ) }
+                            { tags.map( (item) => <span key={item.id+item.nametag}>{item.nametag} </span> ) }
                         </div>
                     </div>
                     
                     <div className={styles.tag_name}>
-                        Создан: {props.author.name} {props.author.sername} 
+                        Создан: {author.login} {createdAt} 
                     </div>
                 </div>
                 <div className={styles.post_content}>
                         <h2 className={styles.post_title}>
-                            {props.title}
+                            {article}
                         </h2>
                         <p className={styles.post_text}>
-                            {props.text}
+                            {text}
                         </p>
                 </div>
-                <Link to = {Page.OnePost + '/' + props.id}>
+                <Link to = {Page.OnePost + '/' + id}>
                     <Button>Читать далее</Button>
                 </Link>
             </div>

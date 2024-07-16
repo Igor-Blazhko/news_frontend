@@ -8,7 +8,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    animation: fadeInLeft 0.5s ease-out;
+    /* animation: fadeInLeft 0.5s ease-out; */
   }
   
 

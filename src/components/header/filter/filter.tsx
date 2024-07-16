@@ -1,70 +1,32 @@
 
-import { useEffect, useState } from 'react'
-import { User } from '../../pageOnePost/types/types'
-import styles from '../header.module.css'
+import { useRef } from 'react'
+import styles from './filter.module.css'
 import { useDispatch } from 'react-redux'
+import { Filter as filteres } from '../../../types';
 
 export default function Filter(){
-    const [users, setUsers] = useState([ {
-        id: 1,
-        name: 'igor',
-        sername: 'Blazhko',
-        login: 'user1',
-    }])
-    const [change, setChange] = useState(false)
+    const selector = useRef(null)
+
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        const users = [
-            {
-                id: 1,
-                name: 'igor',
-                sername: 'Blazhko',
-                login: 'user1',
-            },
-            {
-                id: 2,
-                name: 'igor',
-                sername: 'Tokin',
-                login: 'user2',
-            },
-            {
-                id: 3,
-                name: 'igor',
-                sername: 'Lankin',
-                login: 'user3',
-            },
-        ];
-        setUsers(users);
-        // setLog(JWT)
-    },[])
-
     function changeFilter(event:React.ChangeEvent<HTMLInputElement>){
+        if (selector.current)
         dispatch({
             type:'Filter',
             buffer: event.target.value,
+            typeFilter: selector.current.value,
         })
     }
 
-    function changeUser(event) {
-        dispatch({
-            type:'setUserFilter',
-            userId: +event.target.value,
-        })
-        if ( +event.target.value ) setChange(true)
-        else setChange(false)
-    }
 
     return (
             <div className={styles.filter}>
                 <input type="text" placeholder="Поиск по тегам" onChange={changeFilter}/>
-                <select onChange={changeUser} defaultValue="option0">
-                    <option value="0">
-                        { change? 'Cбросить фильтрацию': 'Выберите пользователя'}
-                    </option>
-                    { 
-                        users.map((user:User)=> <option key = {user.id} value={user.id}>{user.name} {user.sername}</option>)
-                    }
+                <select name="typeFilter" defaultValue="option0" className={styles.filter_select} ref={selector}>
+                    <option value={filteres.All} > {filteres.All} </option>
+                    <option value={filteres.Title} > {filteres.Title} </option>
+                    <option value={filteres.Tags} > {filteres.Tags} </option>
+                    <option value={filteres.User} > {filteres.User} </option>
                 </select>
             </div>
     )

@@ -28,10 +28,10 @@ export default function CreatePost(){
         formData.append('article', article.current.value);
         formData.append('text', text.current.value);
         getTags(tags.current.value).forEach((item,i) => {
-            formData.append(`tags[${i}][nametag]`, item.nametag);
+            formData.append(`Tags`, item.nametag);
         })
 
-        console.log(formData.getAll('tags'))
+        sendPost(formData)
     }
 
     function getTags(string:string):Tag[]{
@@ -48,11 +48,11 @@ export default function CreatePost(){
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${JWT}`
             },
             body:body,
         })
+        return await response.json()
     }
 
     return (

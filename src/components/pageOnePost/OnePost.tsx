@@ -5,50 +5,45 @@ import { lazy, useEffect, useState } from "react";
 import Comment from "./comments/comments";
 import { Posts } from "./types/types";
 import SERVER from "../../dataServer";
+import { useQuery } from "react-query";
 
 
 
 export default function Post(){
-    const BASE_post:Posts = {
-        id: 0,
-        article: 'string',
-        text: 'string',
-        tags: [{nametag:''}],
-        author: {
-            id: 0,
-            login: '',
-            name: '',
-        },
-        image: {
-            path: ''
-        }
-    }
+    const {data, isError, isLoading} = useQuery('post',()=> getPost( getId( location.pathname )))
     const location = useLocation()
-    const [id , setId] = useState(0)
     const [showingComment , setshowingComment] = useState(false)
-    const [post, setPost] = useState( {...BASE_post} )
-
-    useEffect(() => {
-        const id = getId( location.pathname )
-        setId( id )
-        getPost( id )
-    },[location])
 
     function getId(path: string ): number {
         const id = +path.slice(path.lastIndexOf('/')+1 )
         return id
     }
 
-    async function getPost(id: number): Promise<void>{
+    async function getPost(id: number): Promise<Posts>{
         const url = SERVER.GET.oneNews+id;
         const response = await fetch(url);
         const post:Posts = await response.json()
-        setPost(post)
+        return post
+        //setPost(post)
     }
 
     function showComment () {
         setshowingComment(( value ) => !value )
     }
+
+    if (isError) return (<main> Ошибка работы сервера </main>)
+        
+    if (isLoading) return (<main> Загрузка </main>)
+
+    if (!data) return (
+        <main> 
+            <Link to="/">
+                <Button>Назад</Button>
+            </Link>
+            Данного поста не существует 
+        </main>
+    )
+
     return (
         <main className={styles.main}>
             <Link to="/">
@@ -59,14 +54,14 @@ export default function Post(){
 
 
             <div className={styles.post_content_full}>
-                <img src={post.image?.path} alt="SOME img" className={styles.post_image}/>
-                <h2 className={styles.post_title_full}> {post.article}</h2>
+                <img src={SERVER.base+data.image?.path} alt="SOME img" className={styles.post_image}/>
+                <h2 className={styles.post_title_full}> {data.article}</h2>
                 <p className={styles.post_text_full}>
-                    {post.text}
+                    {data.text}
                 </p>
             </div>
 
-            {showingComment && <Comment comments = {post.comments} idPost = {id} key={id}/>}
+            {showingComment && <Comment idPost = {data.id} key={data.id}/>}
             
 
         </main>

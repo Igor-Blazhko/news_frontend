@@ -1,53 +1,68 @@
 import OnePost from "./onePost/onePost";
 import styles from './allPost.module.css'
-import { useEffect, useState } from "react";
 import { Posts } from "../pageOnePost/types/types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { States } from "../../store";
 import SERVER from "../../dataServer";
+import { useQuery } from "react-query";
+import ButtonsPagination from "./buttonPagination/buttonPagination";
+import { useEffect, useState } from "react";
+import { Filter } from "../../types";
 
 
 export default function AllPost(){
-    const [posts, setPosts] = useState([{
-        id: 0,
-        article: '0 1',
-        text: '0 0 1',
-        tags: [
-            {
-                nametag: '0',
-            },
-        ],
-        author: {
-            id: 0,
-            name: '0',
-            sername: '0',
-            login: '0',
-        }
-    }]);
-    const filter = useSelector( (state:States) => state.tagfilter)
-    const userfilter = useSelector( (state:States) => state.userfilter)
-    useEffect(()=>{
-        getAllNews()
-    },[])
+    const filter = useSelector( (state:States) => state.filter)
+    const typeFilter = useSelector( (state:States) => state.typeFilter)
+    const selPage = useSelector( (state:States) => state.selectedPage)
+    const dispatch = useDispatch()
+    const {data, isError, isLoading} = useQuery(['posts', selPage, filter], ()=> {
+        if (filter) return getAllNewsByFilter(selPage,filter, typeFilter)
+        return getAllNews(selPage)
+    } ,{
+        
+    })
 
-    async function getAllNews(){
-        const response = await fetch(SERVER.GET.allNews);
+    async function getAllNewsByFilter(page:number, filter:string, typeFilter:Filter){
+        const response = await fetch(SERVER.GET.allNewsByFiler(page, filter, typeFilter));
         const posts = await response.json();
-        setPosts(posts);
         return posts
+    }
+
+    async function getAllNews(page:number){
+        const response = await fetch(SERVER.GET.allNewsByPage+page);
+        const posts = await response.json();
+        return posts
+    }
+    
+    if (isError) return (<main> Ошибка сервера </main>)
+    if (isLoading) return (<main> Загрузка.. </main>)
+    if (!data.posts) return (<main> Постов нет </main>)
+    if (!data.posts.length) {
+        dispatch({
+            type:'setPage',
+            setPage: 1,
+        })
+        return (<main> По фильтру нет данных </main>)
     }
     return(
         <main className={styles.main}>
-            { 
-                posts
-                    .filter( (item) => filter[0]? item.tags
-                                                            .some( (tag) => new Set(filter).has(tag.nametag)): true) 
-                                                        
-                    .filter( (item) => userfilter? item.author.id === userfilter : true)
-                    .map( (post:Posts) => 
-                    <OnePost id = {post.id} title={post.article} text = {post.text} key={post.id} tags={post.tags} author = {post.author}></OnePost>
-                )
-            }
+            <section className={styles.allPost}>
+                <div>
+                    { data && 
+                        data.posts
+                            .map( (post:Posts) => <OnePost 
+                                key={post.author.login + post.id}
+                                id={post.id}
+                                article={post.article}
+                                text={post.text}
+                                tags={post.tags} 
+                                author={post.author}
+                                createdAt ={post.createdAt.substring(0,10)} 
+                                /> )
+                    }
+                </div>
+                    {data.countPage && <ButtonsPagination count={data.countPage}/>}
+            </section>
         </main>
     )
 }

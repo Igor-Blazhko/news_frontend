@@ -6,7 +6,6 @@ import { States } from "../../store";
 import SERVER from "../../dataServer";
 import { useQuery } from "react-query";
 import ButtonsPagination from "./buttonPagination/buttonPagination";
-import { useEffect, useState } from "react";
 import { Filter } from "../../types";
 
 
@@ -15,7 +14,7 @@ export default function AllPost(){
     const typeFilter = useSelector( (state:States) => state.typeFilter)
     const selPage = useSelector( (state:States) => state.selectedPage)
     const dispatch = useDispatch()
-    const {data, isError, isLoading} = useQuery(['posts', selPage, filter], ()=> {
+    const {data, isError, isLoading} = useQuery(['posts', selPage, filter, typeFilter], ()=> {
         if (filter) return getAllNewsByFilter(selPage,filter, typeFilter)
         return getAllNews(selPage)
     } ,{

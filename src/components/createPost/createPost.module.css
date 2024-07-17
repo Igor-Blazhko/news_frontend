@@ -1,7 +1,6 @@
 .form {
-    border: 2px solid #444;
     border-radius: 15px;
-    width: 60%;
+    width: 100%;
     height: calc(100vh - 200px);
     margin: 0 auto;
     display: flex;
@@ -36,7 +35,7 @@ textarea{
 }
 
 .label {
-    width: 5%;
+    display: inline;
 }
 div:has(textarea:focus) .label{
     top: 0;
@@ -49,27 +48,26 @@ form input{
     display: block;
 }
 
-form>div:after{
-    display: block;
-    width: 98%;
-    background-color: #444;
-    border: 2px solid #444;
-    content: "";
-    margin: 10px;
-}
+
 
 label.file{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     position: relative;
     top: 0;
     left: 0;
     display: block;
-    border: #6e6d6d 3px solid;
+    border: #6e6d6d 3px dashed;
     border-radius: 40px;
     width: 100%;
     height: 50px;
 }
 label.file_upload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     position: relative;
     top: 0;
@@ -80,6 +78,7 @@ label.file_upload{
     width: 100%;
     height: 50px;
     background-color: #2c913d;
+    border: #6e6d6d 3px solid;
 }
 label:has(input[type='file']:hover){
     background-color: #aaa9a9;

@@ -12,3 +12,7 @@ main {
   flex-direction: column;
   justify-content: space-between;
 }
+.filter{
+  position: absolute;
+  bottom: 50px;
+}

@@ -4,6 +4,8 @@ export const enum Page {
     AllPost = 'AllPost',
     OnePost = 'OnePost',
     CreatePost = 'CreatePost',
+    MyProfile = 'profile',
+    FindUser = 'findUser',
 }
 
 export const enum Filter {

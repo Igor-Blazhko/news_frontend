@@ -97,9 +97,7 @@ export default function SignIn(){
             <input type="password" placeholder="Повторите пароль" onChange={validation} ref={inpPassAccept} className= {valid?  '':styles.red} required/>
             <input type="text" placeholder="Имя" ref={inpName} required/>
             <input type="text" placeholder="Фамилия" ref={inpSername} required/>
-            <button onKeyDown={createRequest} onClick={createRequest}>
-            Зарегистрироваться
-            </button>
+            <button onKeyDown={createRequest} onClick={createRequest} className={styles.button}>Зарегистрироваться</button>
         </form>
         <div>
             {(error.status >=300)? <div>{error.message}</div>: null}

@@ -7,6 +7,8 @@ import CreatePost from "../createPost/createPost";
 import OnePost from '../pageOnePost/OnePost'
 import { useSelector } from "react-redux";
 import { States } from "../../store";
+import Profile from "../profile/profile";
+import FindUser from "../findUser/findUser";
 
 export default function Router(){
 
@@ -18,6 +20,9 @@ export default function Router(){
             <Route path={Page.SignIn} element ={ <SignIn/> }/>
             <Route path={Page.OnePost+'/:id'} element ={ <OnePost/> }/>
             {JWT && <Route path={Page.CreatePost} element ={ <CreatePost/> }/>}
+            {JWT && <Route path={Page.MyProfile} element ={ <Profile/> }/>}
+            {JWT && <Route path={Page.MyProfile+'/:id'} element ={ <Profile/> }/>}
+            {JWT && <Route path={Page.FindUser} element ={ <FindUser/> }/>}
         </Routes>
     )
 }

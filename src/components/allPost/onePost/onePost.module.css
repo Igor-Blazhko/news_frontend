@@ -72,3 +72,23 @@
   margin-top: 10px;
   font-size: 1em;
 }
+
+
+.goto_user {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+}
+
+.goto_user:hover {
+  transform: translateY(-3px);
+  background-color: blueviolet;
+  cursor: pointer;
+}
+.goto_user:active{
+  background-color: indigo;
+}

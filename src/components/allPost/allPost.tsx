@@ -7,6 +7,7 @@ import SERVER from "../../dataServer";
 import { useQuery } from "react-query";
 import ButtonsPagination from "./buttonPagination/buttonPagination";
 import { Filter } from "../../types";
+import Button from "../simplyComponents/button/button";
 
 
 export default function AllPost(){
@@ -32,7 +33,13 @@ export default function AllPost(){
         const posts = await response.json();
         return posts
     }
-    
+    function dropFilter(){
+        dispatch({
+            type:'Filter',
+            buffer:'',
+            typeFilter:Filter.All,
+        })
+    }
     if (isError) return (<main> Ошибка сервера </main>)
     if (isLoading) return (<main> Загрузка.. </main>)
     if (!data.posts) return (<main> Постов нет </main>)
@@ -41,11 +48,30 @@ export default function AllPost(){
             type:'setPage',
             setPage: 1,
         })
-        return (<main> По фильтру нет данных </main>)
+        return (
+        <main> 
+            <section className={styles.NotFound}>
+            {filter && 
+                <div> 
+                    Страница отсортирована по фильтру:{typeFilter} <br />
+                    Фильтр:{filter} <br />
+                    <Button onClick={ dropFilter }>Сбросить</Button>
+                </div>
+            }
+            <div>По фильтру нет данных </div>
+            </section>
+        </main>
+        )
     }
     return(
         <main className={styles.main}>
             <section className={styles.allPost}>
+                {filter && 
+                <div className={styles.filter}> 
+                    Страница отсортирована по фильтру:{typeFilter} <br />
+                    Фильтр:{filter} <br />
+                    <Button onClick={ dropFilter }>Сбросить</Button>
+                </div>}
                 <div>
                     { data && 
                         data.posts

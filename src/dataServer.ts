@@ -20,6 +20,12 @@ const SERVER = {
         countPageNews: 'http://127.0.0.1:5000/news/count',
         oneNews: 'http://127.0.0.1:5000/news?id=',
         getAllCommentByPostId: 'http://127.0.0.1:5000/comments?id=',
+        user: (id:number) => `http://127.0.0.1:5000/users?id=${id}`,
+        img: (id:number) => `http://127.0.0.1:5000/uploadfile?id=${id}`,
+        myProfile: 'http://127.0.0.1:5000/auth/profile',
+    },
+    PATCH:{
+        user: 'http://127.0.0.1:5000/users',
     }
 }
 export default SERVER; 

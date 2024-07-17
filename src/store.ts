@@ -30,7 +30,6 @@ const reducer = (state = defaultState, action:Action) => {
   switch (action.type){
     case 'Filter':
       if (( 'buffer' in action) && (action.buffer !== undefined) && ( 'typeFilter' in action ) && (action.typeFilter !== undefined)) {
-        // const arr = action.buffer.split(' ');
         state = {...state,
           filter: action.buffer,
           typeFilter:action.typeFilter
@@ -43,7 +42,6 @@ const reducer = (state = defaultState, action:Action) => {
           JWT: action.JWT,
         }
         cooks.LogIn(action.JWT)
-      // document.cookie = `JWT_token=${action.JWT}`
       }
       return state;
     case 'DelJwt':
@@ -71,6 +69,13 @@ const reducer = (state = defaultState, action:Action) => {
           ...state,
           selectedPage: action.setPage,
         }
+      return state;
+    case 'dropFilter':
+      state = {
+        ...state,
+        filter: '',
+        typeFilter: Filter.All,
+      }
       return state
     default:
       return state;

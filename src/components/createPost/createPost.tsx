@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Page } from "../../types";
 import Button from "../simplyComponents/button/button";
 import SERVER from "../../dataServer";
@@ -14,10 +14,9 @@ export default function CreatePost(){
     const [file, setFile] = useState()
     const article = useRef(null)
     const text = useRef(null)
-    const tags = useRef()
+    const tags = useRef(null)
     const JWT = useSelector( (state:States) => state.JWT)
-    useEffect(()=>{
-    },[ref])
+    const navitage = useNavigate()
 
     function loadPost (event:Event){
         event.preventDefault()
@@ -32,6 +31,7 @@ export default function CreatePost(){
         })
 
         sendPost(formData)
+        navitage('/')
     }
 
     function getTags(string:string):Tag[]{
@@ -43,7 +43,7 @@ export default function CreatePost(){
         return  newArr.filter((item) => item!==undefined )
     }
 
-    async function sendPost(body){
+    async function sendPost(body:FormData){
         const response = await fetch(SERVER.POST.News.create, {
             method: 'POST',
             headers: {
@@ -72,11 +72,11 @@ export default function CreatePost(){
                     </div>
                     <div className={styles.tags}>
                         <label htmlFor="tags" className={styles.tags}>Теги</label>
-                        <input type="text" name="tags" placeholder=""  className={styles.tags} ref={tags}/>
+                        <input type="text" name="tags" placeholder="tag1 tag2 tag3"  className={styles.tags} ref={tags}/>
                     </div>
                     <div className={styles.file}>
                         <label htmlFor="file" className={upload? styles.file_upload : styles.file}>
-                            {upload? 'Файл загружен': 'Загрузить файл(нажми на меня)'}
+                            {(upload && file)? `Загружен файл:${file.name}`: 'Загрузить файл(нажми на меня)'}
                             <input ref={file} type="file" name="file" className={styles.file} hidden onChange={(e)=>{ 
                                 setUpload(()=>true); 
                                 setRef((val)=>val+1)
@@ -84,7 +84,7 @@ export default function CreatePost(){
                                 }}/>
                         </label>
                     </div>
-                    <button type="submit" className={styles.btn} onClick={loadPost}>Создать</button>
+                    <Button onClick={loadPost}>Создать</Button>
                 </form>
             </div>
         </main>

@@ -16,7 +16,12 @@ export default function OnePost({tags, author, article, text, id, createdAt}:Pos
                     </div>
                     
                     <div className={styles.tag_name}>
-                        Создан: {author.login} {createdAt} 
+                    Создан: <Link to={`${Page.MyProfile}/${author.id}`}>
+                        <button className={styles.goto_user}>
+                            {author.login}  
+                        </button>
+                    </Link>
+                    {createdAt}
                     </div>
                 </div>
                 <div className={styles.post_content}>

@@ -21,15 +21,18 @@ export default function ButtonAuth(){
             { 
                 JWT?  
                 <div className="auth">
-                    <Button onClick={LogOut}>LogOut</Button>
+                    <Link to={Page.MyProfile}>
+                        <Button>Мой профиль</Button>
+                    </Link>
+                    <Button onClick={LogOut}>Выйти</Button>
                 </div> 
                 :
                 <div className="auth">
                     <Link to={Page.LogIn}>
-                        <Button>LogIn</Button>
+                        <Button>Войти</Button>
                     </Link>
                     <Link to={Page.SignIn}>
-                        <Button>SignIn</Button>
+                        <Button>Зарегистрироваться</Button>
                     </Link>
                 </div>
                 }

@@ -14,7 +14,8 @@ export default function FindUser(){
     let source: CancelTokenSource;
     const { data , isError, isLoading}:Query<User[]> = useQuery('users', fetchUsers);
     async function fetchUsers(){
-        return axios.get(SERVER.GET.userByLogin(filterUser.current.value))
+        if(filterUser.current)
+            return axios.get(SERVER.GET.userByLogin(filterUser.current.value))
         return new Promise<void>((resolve) => {
             setTimeout(()=>{
                 if (source) 

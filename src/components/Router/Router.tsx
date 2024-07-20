@@ -16,7 +16,6 @@ import FindUser from "../findUser/findUser";
 
 export default function Router(){
     const JWT = useSelector( (state:States) => state.JWT)
-    console.log(JWT)
     return (
         <Routes>
             <Route path="*" element ={ <AllPost/> }/>

@@ -7,11 +7,13 @@ import Filter from './filter/filter';
 import { Page } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { States } from '../../store';
+import cooks from '../../basefunction';
 
 
 export default function Header() {
     const JWT = useSelector( (state:States) => state.JWT)
     const dispatch = useDispatch()
+    console.log(cooks.getRefreshToken())
         return (
         <header className={styles.header}>
             <div className={styles.logo}>

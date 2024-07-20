@@ -6,6 +6,7 @@ import SERVER from '../../../dataServer';
 import { useDispatch } from 'react-redux';
 import { Page } from '../../../types';
 import cooks from '../../../basefunction';
+import { LogInDTO } from '../types';
 
 export default function LogIn(){
     const navigate = useNavigate();
@@ -14,8 +15,8 @@ export default function LogIn(){
         message: '',
         name: '',
     })
-    const inpLogin = useRef();
-    const inpPass = useRef();
+    const inpLogin = useRef<HTMLInputElement>(null);
+    const inpPass = useRef<HTMLInputElement>(null);
     const dispatch = useDispatch();
 
 
@@ -34,7 +35,7 @@ export default function LogIn(){
         document.location = SERVER.google;
     }
 
-    async function sendUser(body) {
+    async function sendUser(body:LogInDTO) {
         const response = await fetch(SERVER.POST.login, {
             method: 'POST',
             credentials: 'include',
@@ -45,7 +46,7 @@ export default function LogIn(){
             body: JSON.stringify(body),
         })
         if (!(response.ok)) setError(await response.json());
-
+        /* Set from body because use http but not https */
         const objectTokens = await response.json()
         cooks.LogIn(objectTokens['access_token'], objectTokens['refresh_token']);
         navigate('/'+Page.AllPost);

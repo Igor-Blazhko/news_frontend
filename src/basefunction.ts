@@ -51,10 +51,10 @@ class Cookie {
 
     LogOut(){
       this.setCookie('access_token', '', {
-        'max-age': 1
+        'max-age': -1
       } );
       this.setCookie('refresh_token', '', {
-        'max-age': 1
+        'max-age': -1
       } );
     }
 

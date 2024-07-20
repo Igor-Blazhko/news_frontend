@@ -8,6 +8,7 @@ import { User } from "../../pageOnePost/types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { States } from "../../../store";
 import { HTTPExeption, ObjectToken, Page } from "../../../types";
+import cooks from "../../../basefunction";
 
 export default function SignIn(){
     const navigate = useNavigate();
@@ -72,18 +73,11 @@ export default function SignIn(){
             },
             body: JSON.stringify(body)
         })
-        const token =  await response.json()
-        console.log(token, JWTToken)
-        if( 'access_token' in token){
-            console.log('u in token WTF??')
-            dispatch({
-                type: 'SetJWT',
-                JWT: token['access_token'],
-            });
-            navigate(Page.AllPost)
-        }
-        else if ( 'status' in token) 
-            setError(token)
+        if (!(response.ok)) setError(await response.json());
+
+        const objectTokens = await response.json()
+        cooks.LogIn(objectTokens['access_token'], objectTokens['refresh_token']);
+        navigate('/'+Page.AllPost);
     }
     return (
         <main>
@@ -92,11 +86,11 @@ export default function SignIn(){
             </Link>
         <form className={styles.auth_form}>
             <h2>Регистрация</h2>
-            <input type="text" placeholder="Логин" ref={inpLogin} required/>
-            <input type="password" placeholder="Пароль" onChange={validation} className= {valid?  '':styles.red} ref={inpPass} required/>
-            <input type="password" placeholder="Повторите пароль" onChange={validation} ref={inpPassAccept} className= {valid?  '':styles.red} required/>
-            <input type="text" placeholder="Имя" ref={inpName} required/>
-            <input type="text" placeholder="Фамилия" ref={inpSername} required/>
+            <input type="email" placeholder="Логин" ref={inpLogin} required maxLength={20}/>
+            <input type="password" placeholder="Пароль" onChange={validation} className= {valid?  '':styles.red} ref={inpPass} required maxLength={20}/>
+            <input type="password" placeholder="Повторите пароль" onChange={validation} ref={inpPassAccept} className= {valid?  '':styles.red} required maxLength={20}/>
+            <input type="text" placeholder="Имя" ref={inpName} required maxLength={20}/>
+            <input type="text" placeholder="Фамилия" ref={inpSername} required maxLength={20}/>
             <button onKeyDown={createRequest} onClick={createRequest} className={styles.button}>Зарегистрироваться</button>
         </form>
         <div>

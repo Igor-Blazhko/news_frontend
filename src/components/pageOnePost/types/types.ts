@@ -28,6 +28,7 @@ export interface User{
     name:string,
     sername:string,
     password?:string,
+    avatarId?:number
 }
 
 export interface Comment {

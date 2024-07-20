@@ -60,7 +60,7 @@ export default function Comment({idPost}:props){
             { data && data.map((comment:COM, index:number) => < OneComment key={comment.text+index} {...comment} />) }
 
             <form action="" className={styles.comment_form}>
-                <textarea name="comment" id="comment" rows={4} placeholder="Оставьте ваш комментарий" required ref={text}></textarea>
+                <textarea name="comment" id="comment" rows={4} placeholder="Оставьте ваш комментарий" required ref={text} maxLength={255}></textarea>
 
                 { isError && <div>Нет комментариев</div>}
                 { isLoading && <div>Загрузка комментариев</div>}

@@ -22,3 +22,8 @@
 nav.pagi{
     margin: 0 auto;
 }
+
+.Btn_pagi_active {
+
+    background-color: blueviolet;
+}

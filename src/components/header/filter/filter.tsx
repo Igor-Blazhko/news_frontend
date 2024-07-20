@@ -22,7 +22,7 @@ export default function Filter(){
 
     return (
             <div className={styles.filter}>
-                <input type="text" placeholder="Поиск по тегам" onChange={changeFilter} ref={inp}/>
+                <input type="text" placeholder="Поиск по тегам" onChange={changeFilter} ref={inp} maxLength={20}/>
                 <select name="typeFilter" defaultValue="option0" className={styles.filter_select} ref={selector} onChange={changeFilter}>
                     <option value={filteres.All} > {filteres.All} </option>
                     <option value={filteres.Title} > {filteres.Title} </option>

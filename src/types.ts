@@ -34,3 +34,9 @@ export class HTTPExeption{
         this.name = name;
     }
 }
+
+export interface Query<T>{
+    data: undefined | Record<string, T>,
+    isError: boolean,
+    isLoading: boolean,
+}

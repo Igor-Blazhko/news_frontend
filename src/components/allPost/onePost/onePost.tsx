@@ -3,8 +3,11 @@ import { Page } from '../../../types'
 import styles from './onePost.module.css'
 import Button from '../../simplyComponents/button/button'
 import { Posts} from '../../pageOnePost/types/types'
+import { useSelector } from 'react-redux'
+import { States } from '../../../store'
 
 export default function OnePost({tags, author, article, text, id, createdAt}:Posts){
+    const JWT = useSelector( (state:States) => state.JWT)
     return (
             <div className={styles.post}>
                 <div className={styles.tag}>
@@ -16,10 +19,13 @@ export default function OnePost({tags, author, article, text, id, createdAt}:Pos
                     </div>
                     
                     <div className={styles.tag_name}>
-                    Создан: <Link to={`${Page.MyProfile}/${author.id}`}>
+                    Создан: {!JWT && <>{author.login} </>}
+                    <Link to={`${Page.MyProfile}/${author.id}`}>
+                    {JWT && 
                         <button className={styles.goto_user}>
                             {author.login}  
                         </button>
+                    }
                     </Link>
                     {createdAt}
                     </div>

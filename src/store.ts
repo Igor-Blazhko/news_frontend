@@ -27,6 +27,7 @@ type Action = {
   setPage?:number,
 }
 const reducer = (state = defaultState, action:Action) => {
+
   switch (action.type){
     case 'Filter':
       if (( 'buffer' in action) && (action.buffer !== undefined) && ( 'typeFilter' in action ) && (action.typeFilter !== undefined)) {
@@ -37,11 +38,8 @@ const reducer = (state = defaultState, action:Action) => {
       }
       return state;
     case 'SetJWT':
-      if ( ('JWT' in action) && (action.JWT !== undefined) ){
         state = {...state,
-          JWT: action.JWT,
-        }
-        cooks.LogIn(action.JWT)
+          JWT: cooks.getJWT(),
       }
       return state;
     case 'DelJwt':
@@ -67,7 +65,7 @@ const reducer = (state = defaultState, action:Action) => {
       if ( ( 'setPage' in action ) && action.setPage !== undefined)
         state = {
           ...state,
-          selectedPage: action.setPage,
+          selectedPage: +action.setPage,
         }
       return state;
     case 'dropFilter':
@@ -83,3 +81,5 @@ const reducer = (state = defaultState, action:Action) => {
 }
 
 export const store = createStore(reducer)
+
+

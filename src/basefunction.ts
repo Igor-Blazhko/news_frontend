@@ -1,8 +1,6 @@
-import { useDispatch } from "react-redux";
-
 class Cookie {
     getCookie(name:string) {
-        let matches = document.cookie.match(new RegExp(
+        const matches = document.cookie.match(new RegExp(
           "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
         ));
         return matches ? decodeURIComponent(matches[1]) : undefined;
@@ -12,7 +10,6 @@ class Cookie {
     
         options = {
           path: '/',
-          // при необходимости добавьте другие значения по умолчанию
           ...options
         };
       
@@ -24,7 +21,7 @@ class Cookie {
       
         for (let optionKey in options) {
           updatedCookie += "; " + optionKey;
-          let optionValue = options[optionKey];
+          const optionValue = options[optionKey];
           if (optionValue !== true) {
             updatedCookie += "=" + optionValue;
           }
@@ -40,19 +37,35 @@ class Cookie {
     }
     
     getJWT(){
-        return this.getCookie('JWT_token')
+        return this.getCookie('access_token')
     }
 
-    LogIn(token:string){
-        this.setCookie('JWT_token', token, {
+    LogIn(access_token:string, refresh_token:string){
+        this.setCookie('access_token', access_token, {
             'max-age': 3600
-          } )
+          } );
+        this.setCookie('refresh_token', refresh_token, {
+          'max-age': 864000
+        } )
     }
 
     LogOut(){
-        this.setCookie('JWT_token', '', {
-            'max-age': 3600
-          } )
+      this.setCookie('access_token', '', {
+        'max-age': 1
+      } );
+      this.setCookie('refresh_token', '', {
+        'max-age': 1
+      } );
+    }
+
+    getRefreshToken():string {
+        return this.getCookie('refresh_token') ?? ''
+    }
+
+    setAccessToken(access_token:string){
+      this.setCookie('access_token', access_token, {
+        'max-age': 3600
+      } );
     }
 }
 const cooks = new Cookie()

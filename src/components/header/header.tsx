@@ -5,10 +5,12 @@ import styles from './header.module.css'
 import ButtonAuth  from './buttonAuth/buttonAuth';
 import Filter from './filter/filter';
 import { Page } from '../../types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { States } from '../../store';
 
 
 export default function Header() {
+    const JWT = useSelector( (state:States) => state.JWT)
     const dispatch = useDispatch()
         return (
         <header className={styles.header}>
@@ -19,9 +21,9 @@ export default function Header() {
                 <Link to="">
                     <Button onClick={ () => dispatch({type:'dropFilter'})}>Главная</Button>
                 </Link>
-                <Link to={Page.FindUser}>
+                {JWT && <Link to={Page.FindUser}>
                     <Button>Поиск пользователей</Button>
-                </Link>
+                </Link>}
             </nav>                
             <Filter/>
             <ButtonAuth/>

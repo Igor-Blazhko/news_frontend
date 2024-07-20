@@ -76,7 +76,7 @@ export default function AllPost(){
                     { data && 
                         data.posts
                             .map( (post:Posts) => <OnePost 
-                                key={post.author.login + post.id}
+                                key={post.author.login + post.id + Math.random()*100}
                                 id={post.id}
                                 article={post.article}
                                 text={post.text}

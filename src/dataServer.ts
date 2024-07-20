@@ -1,31 +1,34 @@
 import { Filter } from "./types";
 
-
+const base =  'http://127.0.0.1:5000/'
 const SERVER = {
-    base: 'http://127.0.0.1:5000/',
+    base: base,
+    google: `${base}google`,
     POST: {
-        register: 'http://127.0.0.1:5000/auth/registration',
-        login: 'http://127.0.0.1:5000/auth/login',
+        register: `${base}auth/registration`,
+        login: `${base}auth/login`,
         comments: {
-            createCom: 'http://127.0.0.1:5000/comments',
+            createCom: `${base}comments`,
         },
         News: {
-            create: 'http://127.0.0.1:5000/news',
+            create: `${base}news`,
         }
     },
     GET: {
-        allNews: 'http://127.0.0.1:5000/news',
-        allNewsByPage: 'http://127.0.0.1:5000/news?page=',
-        allNewsByFiler: (page:number, filter:string, typeFilter:Filter) => `http://127.0.0.1:5000/news?page=${page}&typeFilter=${typeFilter}&filter=${filter}`,
-        countPageNews: 'http://127.0.0.1:5000/news/count',
-        oneNews: 'http://127.0.0.1:5000/news?id=',
-        getAllCommentByPostId: 'http://127.0.0.1:5000/comments?id=',
-        user: (id:number) => `http://127.0.0.1:5000/users?id=${id}`,
-        img: (id:number) => `http://127.0.0.1:5000/uploadfile?id=${id}`,
-        myProfile: 'http://127.0.0.1:5000/auth/profile',
+        allNews: `${base}news`,
+        allNewsByPage: `${base}news?page=`,
+        allNewsByFiler: (page:number, filter:string, typeFilter:Filter) => `${base}news?page=${page}&typeFilter=${typeFilter}&filter=${filter}`,
+        countPageNews: `${base}news/count`,
+        oneNews: `${base}news?id=`,
+        getAllCommentByPostId: `${base}comments?id=`,
+        user: (id:number) => `${base}users?id=${id}`,
+        userByLogin: (login:string) => `/users?login=${login}`,
+        img: (id:number) => `${base}uploadfile?id=${id}`,
+        myProfile: `${base}auth/profile`,
+        refreshToken: (token:string) => `${base}auth/refreshToken?token=${token}`
     },
     PATCH:{
-        user: 'http://127.0.0.1:5000/users',
-    }
+        user: `${base}users`,
+    },
 }
 export default SERVER; 
